@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project name="MyJavaProject" default="compile" basedir=".">
+
+    <!-- Definiere Verzeichnisse -->
+    <property name="src.dir" location="src"/>
+    <property name="build.dir" location="build"/>
+    <property name="classes.dir" location="${build.dir}/classes"/>
+
+    <!-- Definiere den Klassenpfad -->
+    <path id="classpath">
+        <fileset dir="${lib.dir}">
+            <include name="../externals/**/*.jar"/>
+        </fileset>
+    </path>
+
+    <!-- Ziel: clean -->
+    <target name="clean">
+        <delete dir="${build.dir}"/>
+    </target>
+
+    <!-- Ziel: init -->
+    <target name="init">
+        <mkdir dir="${classes.dir}"/>
+    </target>
+
+    <!-- Ziel: compile -->
+    <target name="compile" depends="init">
+        <javac srcdir="${src.dir}" destdir="${classes.dir}">
+            <include name="**/*.java"/>
+            <classpath>
+                <pathelement path="/home/mogel/Projekte/x8Games.de/Dobby/Quellcodes/externals/apache-log4j/log4j-api-2.19.0.jar" />
+                <pathelement path="/home/mogel/Projekte/x8Games.de/Dobby/Quellcodes/externals/apache-log4j/log4j-core-2.19.0.jar" />
+            </classpath>
+        </javac>
+    </target>
+
+    <!-- Ziel: jar -->
+    <target name="jar" depends="compile">
+        <mkdir dir="${build.dir}/jar"/>
+        <jar destfile="${build.dir}/jar/MyJavaProject.jar" basedir="${classes.dir}">
+            <manifest>
+                <attribute name="Main-Class" value="com.example.Main"/>
+                <attribute name="Class-Path" value="${lib.dir}/log4j-api-2.x.y.jar ${lib.dir}/log4j-core-2.x.y.jar"/>
+            </manifest>
+        </jar>
+    </target>
+
+</project>
